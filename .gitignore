@@ -1,0 +1,9 @@
+/target
+/dist
+**/*.rs.bk
+*.pdb
+
+# probe output and local scratch
+probe_log.json
+*.bak
+__pycache__/
