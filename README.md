@@ -11,7 +11,7 @@ and is honest about the part that is physically impossible.
 ## What it does
 
 - **Learns any button.** Rather than assuming "button 4 is the side button", you
-  press a button and it captures whatever that button actually emits — a standard
+  press a button and it captures whatever that button actually emits, a standard
   HID button, a keyboard scancode, a consumer-page usage, or a vendor-page bit.
   This is the only approach that works across a 2-button office mouse and a
   12-button MMO mouse.
@@ -107,14 +107,14 @@ compatibility on older Intel integrated graphics.
 hidforge.exe                 launch the GUI
 hidforge.exe --probe [secs]  capture diagnostics: what does each button emit?
 hidforge.exe --bench         headless timing sweep
-hidforge.exe --selftest      12 functional checks (injects real clicks — focus an empty Notepad)
+hidforge.exe --selftest      12 functional checks (injects real clicks - focus an empty Notepad)
 ```
 
 `--probe` is the tool to reach for first when something is not detected. It prints
 staged counters and then one row per distinct signal.
 
 **`reg_ok` is the canary.** It should be a single digit. If it is in the thousands,
-Raw Input registration is looping and starving the message pump — which presents as
+Raw Input registration is looping and starving the message pump - which presents as
 "buttons only register if I keep pressing, and randomly at that".
 
 ## Layout
@@ -142,7 +142,7 @@ shapes everything: HidForge uses Raw Input, so it can distinguish your mouse fro
 your touchpad and see vendor-specific buttons, at the cost of not being able to
 suppress the original event.
 
-Digitizer collections (HID usage page 0x0D — touchscreens and precision touchpads)
+Digitizer collections (HID usage page 0x0D - touchscreens and precision touchpads)
 are deliberately excluded. They stream contact coordinates, so a report bit-diff
 turns finger movement into phantom button presses.
 
