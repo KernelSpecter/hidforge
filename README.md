@@ -151,4 +151,4 @@ not free to listen to.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT - see [LICENSE](LICENSE).
