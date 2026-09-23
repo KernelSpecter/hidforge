@@ -1,0 +1,43 @@
+name: release
+
+# Push a tag like v0.1.0 and this builds hidforge.exe on a clean Windows runner
+# and attaches it, with its SHA-256, to a GitHub release of the same name.
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Check the tag matches Cargo.toml
+        shell: pwsh
+        run: |
+          $version = (Select-String -Path Cargo.toml -Pattern '^version\s*=\s*"(.+)"').Matches[0].Groups[1].Value
+          if ("v$version" -ne $env:GITHUB_REF_NAME) {
+            throw "Tag $env:GITHUB_REF_NAME does not match Cargo.toml version $version"
+          }
+      - name: Build
+        run: cargo build --release
+      - name: Publish
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          Copy-Item target/release/hidforge.exe hidforge.exe
+          $hash = (Get-FileHash hidforge.exe -Algorithm SHA256).Hash.ToLower()
+          "$hash  hidforge.exe" | Out-File -Encoding ascii hidforge.exe.sha256
+          $notes = @"
+          One file, nothing to install. 64-bit Windows 10 or 11.
+
+          The exe is not code signed, so SmartScreen will warn the first time. Click More info, then Run anyway.
+
+          SHA-256: ``$hash``
+          "@
+          gh release create $env:GITHUB_REF_NAME hidforge.exe hidforge.exe.sha256 --title "HidForge $env:GITHUB_REF_NAME" --notes $notes

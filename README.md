@@ -26,6 +26,19 @@ and is honest about the part that is physically impossible.
 - **Emergency stop: `Esc` always stops everything**, whatever is running.
 - Sits in the system tray; closing the window hides it and leaves macros armed.
 
+## Download
+
+Get `hidforge.exe` from the [latest release](https://github.com/KernelSpecter/hidforge/releases/latest).
+It is a single file with nothing to install, and needs 64-bit Windows 10 or 11.
+
+The exe is not code signed, so the first time you run it Windows SmartScreen will
+say it protected your PC. Click More info, then Run anyway. Each release also
+carries a SHA-256 checksum if you want to check the file first:
+
+```
+certutil -hashfile hidforge.exe SHA256
+```
+
 ## Honest limits
 
 These are real constraints, not missing features.
